@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div  class="login_container">
     登录组件
     </div>
 </template>
@@ -9,5 +9,7 @@
 export default{}
 </script>
 <style lang="less" scoped>
-
+     .login_container{
+         background-color: #4c2a41;
+    }
 </style>

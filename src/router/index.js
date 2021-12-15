@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {path: '/login',component: Login},
-  {path: '/',redirect: '/login'}
+  {path: '/',redirect: '/login'},
 ]
 
 const router = new VueRouter({
