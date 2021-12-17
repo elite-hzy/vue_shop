@@ -36,8 +36,8 @@ export default {
     return{
     //登录表单的数据绑定对象
       loginForm:{
-        username:'',
-        password:''
+        username:'admin',
+        password:'123456'
       },
       //表单的验证规则
       loginFormRules:{
@@ -78,7 +78,18 @@ export default {
               this.$router.push("/home");
             }
       })
-    }
+    },
+    // login(){
+    //   //异步同步,把一些异步操作变成同步
+    //   //如果不写,可能出现 这段代码没执行完就执行下一步了的情况
+    //   this.$refs.loginFormRef.validate(async valid=>{
+    //     if(!valid){
+    //       return;
+    //     }
+    //     const result=await this.$http.post("login",this.loginForm);
+    //     console.log(result);
+    //   })
+    // }
 
   }
 }
