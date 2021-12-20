@@ -18,6 +18,7 @@
             :collapse="isCollapse"
             :collapse-transition="false"
             router
+            :default-active="activePath"
         >
           <!--            一级菜单-->
           <!--            这里的index是个坑 默认可能都是index=1,如果都为1就会出现打开一个就全部打开,关闭1个就全部关闭
@@ -32,7 +33,9 @@
               <span>{{ item.authName }}</span>
             </template>
             <!--              二级菜单-->
-            <el-menu-item :index="'/'+subItem.path+''" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="'/'+subItem.path+''" v-for="subItem in item.children" :key="subItem.id"
+            @click="saveNavState('/'+subItem.path)"
+            >
               <template slot="title">
                 <!--                图标-->
                 <i class="el-icon-s-data"></i>
@@ -70,6 +73,8 @@ export default {
       },
       //是否折叠参数
       isCollapse:false,
+      //被激活的链接地址
+      activePath:''
     }
   },
   methods: {
@@ -92,10 +97,16 @@ export default {
     //点击折叠展开菜单
     toggleCollapse(){
       this.isCollapse= !this.isCollapse;
-    }
+    },
+    //保存链接的激活状态
+    saveNavState(activePath){
+      window.sessionStorage.setItem('activePath',activePath)
+      this.activePath=activePath
+    },
   },
   created() {
     this.getMenuList();
+    this.activePath=window.sessionStorage.getItem('activePath')
   }
 };
 </script>

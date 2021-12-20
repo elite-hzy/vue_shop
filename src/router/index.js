@@ -4,6 +4,7 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import {Message} from "element-ui";//按需导入
+import Users from '../components/user/User.vue'
 
 Vue.use(VueRouter)
 
@@ -11,7 +12,8 @@ const routes = [
     {path: '/login', component: Login},
     {
         path: '/home', component: Home, redirect: '/welcome', children: [
-            {path: '/welcome', component: Welcome}
+            {path: '/welcome', component: Welcome},
+            {path: '/users', component: Users},
         ]
     },
     {path: '/', redirect: '/login'},
