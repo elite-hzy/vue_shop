@@ -92,7 +92,7 @@ export default {
         return this.$message.error(result.meta.msg)
       }
       this.menulist = result.data;
-      console.log(result);
+      // console.log(result);//5个Array
     },
     //点击折叠展开菜单
     toggleCollapse(){
