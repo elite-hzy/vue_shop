@@ -53,7 +53,8 @@
 
             <!--            删除按钮-->
             <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+              <el-button type="danger" icon="el-icon-delete" size="mini"
+                         @click="removeUserById(scope.row.id)"></el-button>
             </el-tooltip>
 
             <!--            分配角色按钮-->
@@ -133,7 +134,7 @@
       <!--      按钮区域-->
       <span slot="footer" class="dialog-footer">
     <el-button @click="editDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="editUserInfo">确 定</el-button>
   </span>
     </el-dialog>
   </div>
@@ -213,7 +214,7 @@ export default {
         ]
       },
       //编辑用户验证对象
-      editFormRules:{
+      editFormRules: {
         email: [
           {required: true, message: '请输入邮箱', trigger: 'blur'}, {validator: checkEmail, trigger: 'blur'}
         ],
@@ -288,8 +289,51 @@ export default {
       this.editForm = result.data;
       this.editDialogVisible = true;
     },
-    clearEditDialog(){
+    clearEditDialog() {
       this.$refs.editFormRef.resetFields();
+    },
+    //修改用户信息并提交
+    editUserInfo() {
+      this.$refs.editFormRef.validate(async vaild => {
+        if (!vaild) {
+          return
+        }
+        //到这里说明预验证通过,发起请求
+        const {data: result} = await this.$http.put('users/' + this.editForm.id, {
+          email: this.editForm.email,
+          mobile: this.editForm.mobile
+        });
+        if (result.meta.status !== 200) {
+          return this.$message.error('更新用户信息失败!')
+        }
+        this.editDialogVisible = false;
+        this.getUserList()
+        this.$message.success('更新用户信息成功!')
+      })
+    },
+    //id删除用户
+    async removeUserById(id) {
+      //用弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err);
+      // 原始写法,上层是简写 .catch(err=>{
+      //   return err
+      // })
+      //正常如果你点取消会报错,所以需要用catch来接受错误信息
+      //确认删除返回的是confirm 取消是cancel
+      // console.log(confirmResult);
+      if (confirmResult !== 'confirm') {
+        return  this.$message.info('取消删除')
+      }
+      const {data: result} =await this.$http.delete('users/' + id);
+      if (result.meta.status !== 200) {
+        return this.$message.error('删除用户失败!')
+      }
+      this.$message.success('删除用户成功!')
+      this.getUserList()
     },
   },
   created() {
