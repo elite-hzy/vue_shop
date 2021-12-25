@@ -7,7 +7,8 @@ import {Message} from "element-ui";//按需导入
 import Users from '../components/user/User.vue'
 import Rights from "../components/power/Rights.vue";
 import Roles from  "../components/power/Roles.vue"
-
+import Category from "../components/goods/category.vue"
+import TreeTable from "vue-table-with-tree-grid"
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,12 +19,13 @@ const routes = [
             {path: '/users', component: Users},
             {path: '/rights', component: Rights},
             {path: '/roles', component: Roles},
+            {path: '/categories', component: Category},
         ]
     },
     {path: '/', redirect: '/login'},
 ]
 
-
+Vue.component('tree-table',TreeTable)
 const router = new VueRouter({
     routes
 })
