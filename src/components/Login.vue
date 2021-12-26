@@ -3,7 +3,7 @@
     <div class="login_box">
 <!--      头像区域-->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt="">
+        <img src="../assets/touxiang.jpg" alt="">
       </div>
 <!--      登录区域-->
 <!--      elementUI是通过按需导入的,去element.js里按需导入-->
